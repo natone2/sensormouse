@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 GNU GENERAL PUBLIC LICENSE
    Version 3, 29 June 2007
 
@@ -11,6 +12,21 @@ of this license document, but changing it is not allowed.
 software and other kinds of works.
 
  The licenses for most software and other practical works are designed
+=======
+                    GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+
+                            Preamble
+
+  The GNU General Public License is a free, copyleft license for
+software and other kinds of works.
+
+  The licenses for most software and other practical works are designed
+>>>>>>> 076783793d18c21ae921d90548a9fcabb64a5997
 to take away your freedom to share and change the works.  By contrast,
 the GNU General Public License is intended to guarantee your freedom to
 share and change all versions of a program--to make sure it remains free
@@ -448,7 +464,11 @@ covered work, you indicate your acceptance of this License to do so.
   Each time you convey a covered work, the recipient automatically
 receives a license from the original licensors, to run, modify and
 propagate that work, subject to this License.  You are not responsible
+<<<<<<< HEAD
 for enforcing compliance by third parties to this License.
+=======
+for enforcing compliance by third parties with this License.
+>>>>>>> 076783793d18c21ae921d90548a9fcabb64a5997
 
   An "entity transaction" is a transaction transferring control of an
 organization, or substantially all assets of one, or subdividing an
@@ -647,7 +667,11 @@ the "copyright" line and a pointer to where the full notice is found.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+<<<<<<< HEAD
   Also add information on how to contact you by electronic and paper mail.
+=======
+Also add information on how to contact you by electronic and paper mail.
+>>>>>>> 076783793d18c21ae921d90548a9fcabb64a5997
 
   If the program does terminal interaction, make it output a short
 notice like this when it starts in an interactive mode:
@@ -657,12 +681,18 @@ notice like this when it starts in an interactive mode:
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
 
+<<<<<<< HEAD
   The hypothetical commands `show w' and `show c' should show the appropriate
 parts of the General Public License.  Of course, your program's commands
 might be different; for the colors, you should use whatever commands your
 program uses.  One way to display this is to include a small notice in each
 file, and also place one in a location (such as a relevant directory) where
 users would be likely to look for such a notice.
+=======
+The hypothetical commands `show w' and `show c' should show the appropriate
+parts of the General Public License.  Of course, your program's commands
+might be different; for a GUI interface, you would use an "about box".
+>>>>>>> 076783793d18c21ae921d90548a9fcabb64a5997
 
   You should also get your employer (if you work as a programmer) or school,
 if any, to sign a "copyright disclaimer" for the program, if necessary.
@@ -674,4 +704,8 @@ into proprietary programs.  If your program is a subroutine library, you
 may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
+<<<<<<< HEAD
 <https://www.gnu.org/licenses/why-not-lgpl.html>. 
+=======
+<https://www.gnu.org/licenses/why-not-lgpl.html>.
+>>>>>>> 076783793d18c21ae921d90548a9fcabb64a5997

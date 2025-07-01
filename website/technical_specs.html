@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especificaciones Técnicas | DroidMouse</title>
+    <meta name="description" content="Especificaciones técnicas detalladas de DroidMouse: arquitectura, protocolos, sensores y rendimiento.">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.6">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=1.5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
+                <span class="logo-text">DroidMouse</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="index.html#features" class="nav-link">Características</a></li>
+                <li class="nav-item"><a href="index.html#download" class="nav-link">Descargar</a></li>
+                <li class="nav-item"><a href="index.html#docs" class="nav-link">Documentación</a></li>
+                <li class="nav-item"><a href="https://github.com/natone2/droidmouse" class="nav-link" target="_blank">GitHub</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+    <main class="container" style="margin-top:90px;min-height:60vh;">
+        <div class="section-header">
+            <h1 class="section-title">Especificaciones Técnicas</h1>
+            <p class="section-description">Detalles técnicos completos sobre la arquitectura, protocolos y rendimiento de DroidMouse.</p>
+        </div>
+        <section class="documentation">
+            <h2>Arquitectura del Sistema</h2>
+            <p>DroidMouse utiliza una arquitectura cliente-servidor con comunicación TCP/IP:</p>
+            <ul>
+                <li><strong>Cliente Android:</strong> App nativa en Kotlin que captura datos de sensores</li>
+                <li><strong>Servidor Python:</strong> Procesa datos y controla el ratón del sistema</li>
+                <li><strong>Protocolo:</strong> TCP/IP con formato JSON para intercambio de datos</li>
+            </ul>
+            <h2>Sensores y Frecuencia</h2>
+            <ul>
+                <li><strong>Giroscopio:</strong> Captura rotación en ejes X, Y, Z (grados/segundo)</li>
+                <li><strong>Acelerómetro:</strong> Mide aceleración lineal (m/s²)</li>
+                <li><strong>Frecuencia de muestreo:</strong> 50Hz (20ms entre muestras)</li>
+                <li><strong>Precisión:</strong> 16-bit para giroscopio, 12-bit para acelerómetro</li>
+            </ul>
+            <h2>Algoritmos de Procesamiento</h2>
+            <ul>
+                <li><strong>Filtro de Kalman:</strong> Elimina ruido y vibraciones</li>
+                <li><strong>Calibración automática:</strong> Compensa deriva del sensor</li>
+                <li><strong>Mapeo de coordenadas:</strong> Convierte rotación a movimiento de cursor</li>
+                <li><strong>Suavizado:</strong> Interpolación para movimientos fluidos</li>
+            </ul>
+            <h2>Rendimiento</h2>
+            <ul>
+                <li><strong>Latencia:</strong> &lt; 2ms (servidor) + latencia de red</li>
+                <li><strong>Precisión:</strong> ±0.1° para rotación, ±0.01g para aceleración</li>
+                <li><strong>Consumo de batería:</strong> ~5% por hora en uso continuo</li>
+                <li><strong>Uso de memoria:</strong> ~15MB en Android, ~25MB en PC</li>
+            </ul>
+            <h2>Compatibilidad</h2>
+            <h3>Android</h3>
+            <ul>
+                <li>Android 7.0 (API 24) o superior</li>
+                <li>Giroscopio y acelerómetro requeridos</li>
+                <li>Permisos: SENSORS, INTERNET, ACCESS_NETWORK_STATE</li>
+            </ul>
+            <h3>PC (Servidor)</h3>
+            <ul>
+                <li>Python 3.8+</li>
+                <li>Windows 10+, macOS 10.14+, Linux (kernel 4.0+)</li>
+                <li>Dependencias: pynput, numpy, socket</li>
+            </ul>
+            <h2>Protocolo de Comunicación</h2>
+            <p>Los datos se transmiten en formato JSON con la siguiente estructura:</p>
+            <pre data-language="json"><code>{
+  "timestamp": 1640995200.123,
+  "gyro": {"x": 0.12, "y": -0.08, "z": 0.05},
+  "accel": {"x": 0.01, "y": 0.02, "z": 9.81},
+  "status": "connected"
+}</code></pre>
+            <h2>Seguridad</h2>
+            <ul>
+                <li>Comunicación local (no requiere internet)</li>
+                <li>Validación de datos en servidor</li>
+                <li>Límites de movimiento para prevenir comportamientos erráticos</li>
+                <li>Timeout de conexión automático</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-logo">
+                <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
+                <span class="logo-text">DroidMouse</span>
+            </div>
+            <div class="footer-section">
+                <h4>Documentación</h4>
+                <ul>
+                    <li><a href="instalacion.html">Instalación</a></li>
+                    <li><a href="technical_specs.html">Especificaciones Técnicas</a></li>
+                    <li><a href="api.html">API</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="troubleshooting.html">Solución de Problemas</a></li>
+                    <li><a href="changelog.html">Changelog</a></li>
+                    <li><a href="contributing.html">Contribuir</a></li>
+                    <li><a href="roadmap.html">Roadmap</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Proyecto</h4>
+                <ul>
+                    <li><a href="https://github.com/natone2/droidmouse" target="_blank">GitHub</a></li>
+                    <li><a href="index.html#download">Descargar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="mailto:soporte@droidmouse.com">soporte@droidmouse.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DroidMouse. GPLv3. Hecho con <i class="fas fa-heart"></i> por la comunidad.</p>
+            <div class="author-credit">Desarrollado por <a href="https://natone.pro" target="_blank" rel="noopener">Alex M</a></div>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 

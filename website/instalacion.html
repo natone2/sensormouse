@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalación | DroidMouse</title>
+    <meta name="description" content="Guía de instalación de DroidMouse: transforma tu Android en un ratón virtual para tu PC.">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.5">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=1.5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
+                <span class="logo-text">DroidMouse</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="index.html#features" class="nav-link">Características</a></li>
+                <li class="nav-item"><a href="index.html#download" class="nav-link">Descargar</a></li>
+                <li class="nav-item"><a href="index.html#docs" class="nav-link">Documentación</a></li>
+                <li class="nav-item"><a href="https://github.com/natone2/droidmouse" class="nav-link" target="_blank">GitHub</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+    <main class="container" style="margin-top:90px;min-height:60vh;">
+        <div class="section-header">
+            <h1 class="section-title">Guía de Instalación</h1>
+            <p class="section-description">Sigue estos pasos para instalar y configurar DroidMouse en tu PC y tu dispositivo Android.</p>
+        </div>
+        <section class="documentation">
+            <h2>Requisitos Previos</h2>
+            <ul>
+                <li>PC con Windows, Linux o macOS</li>
+                <li>Python 3.8 o superior</li>
+                <li>Teléfono Android (Android 7.0+ recomendado)</li>
+                <li>Red WiFi local compartida entre PC y móvil</li>
+            </ul>
+            <h2>Instalación del Servidor (PC)</h2>
+            <ol>
+                <li>Descarga o clona el repositorio desde <a href="https://github.com/alex/droid-mouse" target="_blank">GitHub</a>.</li>
+                <li>Abre una terminal y navega a la carpeta <code>server/</code>.</li>
+                <li>Instala las dependencias con:<br><code>pip install -r requirements.txt</code></li>
+                <li>Ejecuta el servidor:<br><code>python main.py</code></li>
+            </ol>
+            <h2>Instalación de la App (Android)</h2>
+            <ol>
+                <li>Descarga el archivo APK desde la sección <a href="index.html#download">Descargar</a>.</li>
+                <li>Copia el APK a tu teléfono e instálalo (puede requerir activar "Orígenes desconocidos").</li>
+                <li>Abre la app y asegúrate de estar en la misma red WiFi que tu PC.</li>
+            </ol>
+            <h2>Primer Uso</h2>
+            <ol>
+                <li>En la app, introduce la IP y puerto del servidor (mostrados en la terminal del PC).</li>
+                <li>Pulsa <b>Conectar</b> y comienza a controlar el ratón con los sensores del móvil.</li>
+            </ol>
+            <h2>Solución de Problemas</h2>
+            <ul>
+                <li>Consulta la sección <a href="troubleshooting.html">Solución de Problemas</a> si tienes inconvenientes.</li>
+                <li>Para dudas frecuentes, revisa la <a href="faq.html">FAQ</a>.</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-logo">
+                <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
+                <span class="logo-text">DroidMouse</span>
+            </div>
+            <div class="footer-section">
+                <h4>Documentación</h4>
+                <ul>
+                    <li><a href="instalacion.html">Instalación</a></li>
+                    <li><a href="technical_specs.html">Especificaciones Técnicas</a></li>
+                    <li><a href="api.html">API</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="troubleshooting.html">Solución de Problemas</a></li>
+                    <li><a href="changelog.html">Changelog</a></li>
+                    <li><a href="contributing.html">Contribuir</a></li>
+                    <li><a href="roadmap.html">Roadmap</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Proyecto</h4>
+                <ul>
+                    <li><a href="https://github.com/alex/droid-mouse" target="_blank">GitHub</a></li>
+                    <li><a href="index.html#download">Descargar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="mailto:soporte@droidmouse.com">soporte@droidmouse.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DroidMouse. GPLv3. Hecho con <i class="fas fa-heart"></i> por la comunidad.</p>
+            <div class="author-credit">Desarrollado por <a href="https://natone.pro" target="_blank" rel="noopener">Alex M</a></div>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DroidMouse</string>
+    <string name="app_description">Control de ratón virtual usando sensores IMU</string>
+    
+    <!-- Estados -->
+    <string name="status_connected">Conectado</string>
+    <string name="status_disconnected">Desconectado</string>
+    <string name="status_connecting">Conectando...</string>
+    <string name="status_error">Error de conexión</string>
+    
+    <!-- Botones -->
+    <string name="btn_connect">Conectar</string>
+    <string name="btn_disconnect">Desconectar</string>
+    <string name="btn_calibrate">Calibrar</string>
+    <string name="btn_recalibrate">Recalibrar</string>
+    <string name="btn_calibrating">Calibrando...</string>
+    <string name="btn_activate">Activar</string>
+    <string name="btn_deactivate">Desactivar</string>
+    
+    <!-- Campos -->
+    <string name="hint_server_ip">IP del Servidor</string>
+    <string name="hint_server_port">Puerto</string>
+    <string name="label_sensitivity">Sensibilidad</string>
+    
+    <!-- Títulos -->
+    <string name="title_connection_status">Estado de Conexión</string>
+    <string name="title_connection_settings">Configuración de Conexión</string>
+    <string name="title_control_settings">Configuración de Control</string>
+    <string name="title_information">Información</string>
+    
+    <!-- Mensajes -->
+    <string name="msg_connect_success">Conectado al servidor</string>
+    <string name="msg_connect_error">Error de conexión</string>
+    <string name="msg_disconnected">Desconectado</string>
+    <string name="msg_calibration_start">Mantén el dispositivo quieto durante 2 segundos</string>
+    <string name="msg_calibration_success">Calibración completada</string>
+    <string name="msg_calibration_failed">Calibración fallida</string>
+    <string name="msg_control_activated">Control activado</string>
+    <string name="msg_control_deactivated">Control desactivado</string>
+    <string name="msg_connect_first">Conecta primero al servidor</string>
+    <string name="msg_invalid_ip_port">IP o puerto inválido</string>
+    <string name="msg_sensors_unavailable">Sensores no disponibles</string>
+    
+    <!-- Información -->
+    <string name="info_usage">• Conecta tu smartphone al mismo WiFi que el ordenador\n• Ejecuta el servidor en tu PC\n• Calibra los sensores manteniendo el dispositivo quieto\n• Activa el control y mueve el dispositivo</string>
+</resources> 

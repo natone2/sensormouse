@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Interactiva | DroidMouse</title>
+    <meta name="description" content="Prueba interactiva de DroidMouse: simula el control de ratón desde el móvil en tu navegador.">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.5">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=1.5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .demo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            padding: 32px 0;
+        }
+        .demo-instructions, .demo-instructions h1, .demo-instructions p {
+            color: #fff !important;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        .demo-instructions {
+            text-align: center;
+        }
+        .phone-demo {
+            width: 320px;
+            height: 640px;
+            background: #222;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            border: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+        }
+        .phone-header {
+            background: linear-gradient(90deg, #00c853 0%, #b2ff59 100%);
+            color: #fff;
+            padding: 18px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        .sensor-panel {
+            padding: 18px 24px 0 24px;
+            font-size: 1.05rem;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        .sensor-panel .sensor-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .demo-canvas {
+            flex: 1;
+            background: #111;
+            position: relative;
+            border-radius: 0 0 32px 32px;
+            overflow: hidden;
+        }
+        .demo-mouse {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: #00c853;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,200,83,0.18);
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+        .demo-controls {
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .demo-controls label {
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        .demo-controls button {
+            background: #00c853;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 22px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .demo-controls button:hover {
+            background: #43e97b;
+        }
+        .demo-controls input[type=range] {
+            width: 180px;
+        }
+        .mouse-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        .mouse-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #fff;
+            transition: color 0.2s;
+        }
+        .mouse-btn:hover {
+            color: #43e97b;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
+                <span class="logo-text">DroidMouse</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="index.html#features" class="nav-link">Características</a></li>
+                <li class="nav-item"><a href="index.html#download" class="nav-link">Descargar</a></li>
+                <li class="nav-item"><a href="index.html#docs" class="nav-link">Documentación</a></li>
+                <li class="nav-item"><a href="https://github.com/natone2/droidmouse" class="nav-link" target="_blank">GitHub</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+    <main class="demo-container" style="margin-top:90px;">
+        <div class="demo-instructions">
+            <h1>Demo Interactiva DroidMouse</h1>
+            <p>Simula el control de ratón desde el móvil. Usa los controles para mover el cursor virtual y observa cómo se actualizan los datos de sensores. ¡Pruébalo desde tu móvil o PC!</p>
+        </div>
+        <div class="phone-demo">
+            <div class="mouse-buttons mouse-buttons-top">
+                <button class="mouse-btn left" id="btn-left" title="Clic izquierdo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="4" width="16" height="24" rx="8" fill="#222" stroke="#6366f1" stroke-width="2"/>
+                        <rect x="9" y="5" width="6" height="10" rx="3" fill="#6366f1"/>
+                        <rect x="17" y="5" width="6" height="10" rx="3" fill="#fff" fill-opacity="0.15"/>
+                        <rect x="13" y="19" width="6" height="6" rx="3" fill="#fff" fill-opacity="0.10"/>
+                    </svg>
+                </button>
+                <button class="mouse-btn middle" id="btn-middle" title="Clic central">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="4" width="16" height="24" rx="8" fill="#222" stroke="#06b6d4" stroke-width="2"/>
+                        <rect x="13" y="5" width="6" height="10" rx="3" fill="#fff" fill-opacity="0.15"/>
+                        <rect x="15" y="8" width="2" height="8" rx="1" fill="#06b6d4"/>
+                        <rect x="13" y="19" width="6" height="6" rx="3" fill="#fff" fill-opacity="0.10"/>
+                    </svg>
+                </button>
+                <button class="mouse-btn right" id="btn-right" title="Clic derecho">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="4" width="16" height="24" rx="8" fill="#222" stroke="#8b5cf6" stroke-width="2"/>
+                        <rect x="9" y="5" width="6" height="10" rx="3" fill="#fff" fill-opacity="0.15"/>
+                        <rect x="17" y="5" width="6" height="10" rx="3" fill="#8b5cf6"/>
+                        <rect x="13" y="19" width="6" height="6" rx="3" fill="#fff" fill-opacity="0.10"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="demo-canvas" id="demo-canvas">
+                <div class="demo-mouse" id="demo-mouse"><i class="fas fa-mouse-pointer"></i></div>
+            </div>
+            <div class="sensor-panel">
+                <div class="sensor-row"><span>Gyro X:</span> <span id="gyro-x">0.00</span></div>
+                <div class="sensor-row"><span>Gyro Y:</span> <span id="gyro-y">0.00</span></div>
+                <div class="sensor-row"><span>Accel Z:</span> <span id="accel-z">9.81</span></div>
+            </div>
+            <div class="phone-header phone-header-bottom"><i class="fas fa-mobile-alt"></i> DroidMouse Demo</div>
+        </div>
+        <div class="demo-controls">
+            <label>Giro X: <input type="range" min="-2" max="2" step="0.01" value="0" id="input-gyro-x"></label>
+            <label>Giro Y: <input type="range" min="-2" max="2" step="0.01" value="0" id="input-gyro-y"></label>
+            <label>Aceleración Z: <input type="range" min="8" max="12" step="0.01" value="9.81" id="input-accel-z"></label>
+            <button id="reset-btn"><i class="fas fa-undo"></i> Centrar Cursor</button>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-logo">
+                <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
+                <span class="logo-text">DroidMouse</span>
+            </div>
+            <div class="footer-section">
+                <h4>Documentación</h4>
+                <ul>
+                    <li><a href="instalacion.html">Instalación</a></li>
+                    <li><a href="technical_specs.html">Especificaciones Técnicas</a></li>
+                    <li><a href="api.html">API</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="troubleshooting.html">Solución de Problemas</a></li>
+                    <li><a href="changelog.html">Changelog</a></li>
+                    <li><a href="contributing.html">Contribuir</a></li>
+                    <li><a href="roadmap.html">Roadmap</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Proyecto</h4>
+                <ul>
+                    <li><a href="https://github.com/natone2/droidmouse" target="_blank">GitHub</a></li>
+                    <li><a href="index.html#download">Descargar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="mailto:soporte@droidmouse.com">soporte@droidmouse.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DroidMouse. GPLv3. Hecho con <i class="fas fa-heart"></i> por la comunidad.</p>
+            <div class="author-credit">Desarrollado por <a href="https://natone.pro" target="_blank" rel="noopener">Alex M</a></div>
+        </div>
+    </footer>
+    <script>
+    // Demo lógica
+    const mouse = document.getElementById('demo-mouse');
+    const canvas = document.getElementById('demo-canvas');
+    const gyroX = document.getElementById('gyro-x');
+    const gyroY = document.getElementById('gyro-y');
+    const accelZ = document.getElementById('accel-z');
+    const inputGyroX = document.getElementById('input-gyro-x');
+    const inputGyroY = document.getElementById('input-gyro-y');
+    const inputAccelZ = document.getElementById('input-accel-z');
+    const resetBtn = document.getElementById('reset-btn');
+
+    let posX = 120, posY = 220;
+    const minX = 0, minY = 0, maxX = 288, maxY = 448;
+    function updateMouse() {
+        mouse.style.left = posX + 'px';
+        mouse.style.top = posY + 'px';
+    }
+    function clamp(val, min, max) {
+        return Math.max(min, Math.min(max, val));
+    }
+    function updateSensors() {
+        gyroX.textContent = parseFloat(inputGyroX.value).toFixed(2);
+        gyroY.textContent = parseFloat(inputGyroY.value).toFixed(2);
+        accelZ.textContent = parseFloat(inputAccelZ.value).toFixed(2);
+    }
+    function moveMouse() {
+        // Simula movimiento por giroscopio
+        posX += parseFloat(inputGyroX.value) * 2.5;
+        posY += parseFloat(inputGyroY.value) * 2.5;
+        posX = clamp(posX, minX, maxX);
+        posY = clamp(posY, minY, maxY);
+        updateMouse();
+    }
+    inputGyroX.addEventListener('input', updateSensors);
+    inputGyroY.addEventListener('input', updateSensors);
+    inputAccelZ.addEventListener('input', updateSensors);
+    inputGyroX.addEventListener('input', moveMouse);
+    inputGyroY.addEventListener('input', moveMouse);
+    resetBtn.addEventListener('click', () => {
+        posX = 120; posY = 220;
+        updateMouse();
+    });
+    // Inicializa
+    updateMouse();
+    updateSensors();
+    </script>
+</body>
+</html> 

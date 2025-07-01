@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DroidMouse Server
+SensorMouse Server
 Servidor multiplataforma para control de ratón virtual usando sensores IMU
 """
 
@@ -143,8 +143,8 @@ class MouseController:
         self.sensitivity = max(0.1, min(5.0, sensitivity))
         print(f"{Fore.CYAN}Sensibilidad ajustada a: {self.sensitivity}{Style.RESET_ALL}")
 
-class DroidMouseServer:
-    """Servidor principal de DroidMouse"""
+class SensorMouseServer:
+    """Servidor principal de SensorMouse"""
     
     def __init__(self, host: str = '0.0.0.0', port: int = 8080):
         self.host = host
@@ -154,7 +154,7 @@ class DroidMouseServer:
         self.mouse_controller = MouseController()
         self.running = False
         
-        print(f"{Fore.BLUE}🐭 DroidMouse Server iniciando...{Style.RESET_ALL}")
+        print(f"{Fore.BLUE}🐭 SensorMouse Server iniciando...{Style.RESET_ALL}")
         print(f"{Fore.CYAN}Escuchando en {host}:{port}{Style.RESET_ALL}")
     
     def start(self):
@@ -265,7 +265,7 @@ class DroidMouseServer:
         
         while self.running:
             try:
-                command = input(f"\n{Fore.GREEN}DroidMouse> {Style.RESET_ALL}").strip().lower()
+                command = input(f"\n{Fore.GREEN}SensorMouse> {Style.RESET_ALL}").strip().lower()
                 
                 if command == 'quit':
                     self.stop()
@@ -337,14 +337,14 @@ class DroidMouseServer:
 
 def main():
     """Función principal"""
-    parser = argparse.ArgumentParser(description='DroidMouse Server')
+    parser = argparse.ArgumentParser(description='SensorMouse Server')
     parser.add_argument('--host', default='0.0.0.0', help='Host del servidor (default: 0.0.0.0)')
     parser.add_argument('--port', type=int, default=8080, help='Puerto del servidor (default: 8080)')
     
     args = parser.parse_args()
     
     try:
-        server = DroidMouseServer(args.host, args.port)
+        server = SensorMouseServer(args.host, args.port)
         server.start()
     except KeyboardInterrupt:
         print(f"\n{Fore.YELLOW}Interrumpido por el usuario{Style.RESET_ALL}")

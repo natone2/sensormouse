@@ -1,4 +1,4 @@
-# Guía de Instalación - DroidMouse
+# Guía de Instalación - SensorMouse
 
 ## Requisitos Previos
 
@@ -16,8 +16,8 @@
 
 ### 1. Clonar el Repositorio
 ```bash
-git clone https://github.com/natone2/droidmouse.git
-cd droid-mouse
+git clone https://github.com/natone2/sensormouse.git
+cd sensormouse
 ```
 
 ### 2. Crear Entorno Virtual (Recomendado)
@@ -47,7 +47,7 @@ El servidor se iniciará en `http://localhost:8080` por defecto.
 ## Instalación de la Aplicación Android
 
 ### Opción 1: APK Precompilado
-1. Descarga el archivo APK desde la [página de releases](releases/droidmouse-debug.apk)
+1. Descarga el archivo APK desde la [página de releases](releases/sensormouse-debug.apk)
 2. Habilita "Fuentes desconocidas" en tu dispositivo Android
 3. Instala el APK descargado
 
@@ -70,7 +70,7 @@ La aplicación solicitará los siguientes permisos:
 ### 2. Conectar Dispositivos
 1. Asegúrate de que ambos dispositivos estén en la misma red WiFi
 2. Inicia el servidor en tu PC
-3. Abre la aplicación DroidMouse en tu teléfono
+3. Abre la aplicación SensorMouse en tu teléfono
 4. Introduce la IP de tu PC en la aplicación
 5. Presiona "Conectar"
 
@@ -122,7 +122,7 @@ export DROIDMOUSE_DEBUG=true
 ### Configuración del Firewall
 ```bash
 # En Windows
-netsh advfirewall firewall add rule name="DroidMouse" dir=in action=allow protocol=TCP localport=8080
+netsh advfirewall firewall add rule name="SensorMouse" dir=in action=allow protocol=TCP localport=8080
 
 # En Linux
 sudo ufw allow 8080/tcp
@@ -134,4 +134,4 @@ Una vez completada la instalación, consulta la [documentación técnica](TECHNI
 
 ---
 
-**¿Necesitas ayuda?** Consulta nuestra [guía de solución de problemas](TROUBLESHOOTING.md) o [reporta un issue](https://github.com/natone2/droidmouse/issues). 
+**¿Necesitas ayuda?** Consulta nuestra [guía de solución de problemas](TROUBLESHOOTING.md) o [reporta un issue](https://github.com/natone2/sensormouse/issues). 

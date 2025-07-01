@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DroidMouse"
+rootProject.name = "SensorMouse"
 include ':app' 

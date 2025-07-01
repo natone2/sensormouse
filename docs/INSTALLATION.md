@@ -1,4 +1,4 @@
-# Guía de Instalación - DroidMouse
+# Guía de Instalación - SensorMouse
 
 ## Requisitos Previos
 
@@ -16,8 +16,8 @@
 
 ### 1. Clonar el Repositorio
 ```bash
-git clone https://github.com/natone2/droidmouse.git
-cd droid-mouse
+git clone https://github.com/natone2/sensormouse.git
+cd sensormouse
 ```
 
 ### 2. Instalar Dependencias
@@ -46,7 +46,7 @@ python main.py --help
 ### 4. Verificar la Instalación
 El servidor debería mostrar:
 ```
-🐭 DroidMouse Server iniciando...
+🐭 SensorMouse Server iniciando...
 Escuchando en 0.0.0.0:8080
 ✓ Servidor iniciado correctamente
 
@@ -57,7 +57,7 @@ Comandos disponibles:
   'calibrate' - Recalibrar sensores
   'sensitivity <valor>' - Ajustar sensibilidad
 
-DroidMouse>
+SensorMouse>
 ```
 
 ## Instalación de la Aplicación Android
@@ -112,7 +112,7 @@ ipconfig
 Busca la IP de tu interfaz WiFi (generalmente empieza con 192.168.x.x)
 
 ### 3. Configurar la Aplicación Android
-1. Abrir DroidMouse en tu smartphone
+1. Abrir SensorMouse en tu smartphone
 2. Introducir la IP del servidor en el campo "IP del Servidor"
 3. Verificar que el puerto sea 8080 (o el que hayas configurado)
 4. Hacer clic en "Conectar"
@@ -206,10 +206,10 @@ sudo ufw allow 8080
 pip uninstall pyautogui numpy scipy psutil colorama
 
 # Eliminar archivos
-rm -rf droid-mouse
+rm -rf sensormouse
 ```
 
 ### Aplicación Android
 - Ir a Configuración > Aplicaciones
-- Buscar "DroidMouse"
+- Buscar "SensorMouse"
 - Seleccionar "Desinstalar" 

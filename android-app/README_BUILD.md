@@ -1,4 +1,4 @@
-# Compilación de APK - DroidMouse
+# Compilación de APK - SensorMouse
 
 ## Requisitos Previos
 
@@ -51,7 +51,7 @@ Este script:
 
 - **Debug**: `app/build/outputs/apk/debug/app-debug.apk`
 - **Release**: `app/build/outputs/apk/release/app-release.apk`
-- **Releases**: `../releases/droidmouse-debug.apk`
+- **Releases**: `../releases/sensormouse-debug.apk`
 
 ## Configuración de Keystore
 
@@ -124,10 +124,10 @@ java -version
 
 ```bash
 # Verificar que la app se instaló
-adb shell pm list packages | grep droidmouse
+adb shell pm list packages | grep sensormouse
 
 # Instalar via ADB (opcional)
-adb install ../releases/droidmouse-debug.apk
+adb install ../releases/sensormouse-debug.apk
 ```
 
 ## Estructura del APK

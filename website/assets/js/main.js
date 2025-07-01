@@ -1,4 +1,4 @@
-// DroidMouse Website JavaScript
+// SensorMouse Website JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     
     // Mobile Navigation Toggle
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const codeContent = document.querySelector('.code-content code');
     if (codeContent) {
         const keywords = ['class', 'def', 'self', 'import', 'from', 'if', 'else', 'try', 'except'];
-        const strings = ['"🐭 DroidMouse Server iniciando..."', '"Servidor TCP/IP para control remoto"'];
+        const strings = ['"🐭 SensorMouse Server iniciando..."', '"Servidor TCP/IP para control remoto"'];
         
         let html = codeContent.textContent;
         
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Performance monitoring
     window.addEventListener('load', function() {
         const loadTime = performance.now();
-        console.log(`DroidMouse website loaded in ${loadTime.toFixed(2)}ms`);
+        console.log(`SensorMouse website loaded in ${loadTime.toFixed(2)}ms`);
     });
     
     // Error handling
@@ -339,9 +339,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Console welcome message
     console.log(`
-    🐭 DroidMouse Website
+    🐭 SensorMouse Website
     
-    Welcome to the DroidMouse project website!
+    Welcome to the SensorMouse project website!
     
     Features:
     - Mobile-responsive design
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
     - Interactive elements
     - Accessibility compliant
     
-    For more information, visit: https://github.com/yourusername/droid-mouse
+    For more information, visit: https://github.com/yourusername/sensormouse
     
     Made with ❤️ for the open source community
     `);

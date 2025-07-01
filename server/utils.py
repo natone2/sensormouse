@@ -1,5 +1,5 @@
 """
-Utilidades para DroidMouse Server
+Utilidades para SensorMouse Server
 Funciones auxiliares y helpers
 """
 

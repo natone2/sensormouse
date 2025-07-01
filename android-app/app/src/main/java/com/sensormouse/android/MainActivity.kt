@@ -1,4 +1,4 @@
-package com.droidmouse.android
+package com.sensormouse.android
 
 import android.content.Context
 import android.hardware.Sensor
@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.droidmouse.android.databinding.ActivityMainBinding
+import com.sensormouse.android.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 import java.io.OutputStream
 import java.net.Socket
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private val sampleRate = 50 // Hz
     
     companion object {
-        private const val TAG = "DroidMouse"
+        private const val TAG = "SensorMouse"
         private const val CALIBRATION_SAMPLES = 100
     }
     

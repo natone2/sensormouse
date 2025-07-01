@@ -1,4 +1,4 @@
-# Especificaciones Técnicas - DroidMouse
+# Especificaciones Técnicas - SensorMouse
 
 ## Arquitectura del Sistema
 

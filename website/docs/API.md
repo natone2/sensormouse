@@ -1,8 +1,8 @@
-# Documentación de la API - DroidMouse
+# Documentación de la API - SensorMouse
 
 ## Descripción General
 
-La API de DroidMouse proporciona una interfaz programática para controlar y monitorear el sistema de ratón virtual. Está diseñada para desarrolladores que quieren integrar DroidMouse en sus aplicaciones o crear extensiones personalizadas.
+La API de SensorMouse proporciona una interfaz programática para controlar y monitorear el sistema de ratón virtual. Está diseñada para desarrolladores que quieren integrar SensorMouse en sus aplicaciones o crear extensiones personalizadas.
 
 ## Endpoints Base
 
@@ -220,7 +220,7 @@ import socket
 import json
 import time
 
-class DroidMouseClient:
+class SensorMouseClient:
     def __init__(self, host='localhost', port=8080):
         self.host = host
         self.port = port
@@ -246,7 +246,7 @@ class DroidMouseClient:
             self.socket.close()
 
 # Uso
-client = DroidMouseClient()
+client = SensorMouseClient()
 client.connect()
 client.send_sensor_data(0.1, -0.05, 0.0, 0.02, -0.01, 9.81)
 client.close()
@@ -256,7 +256,7 @@ client.close()
 ```javascript
 const net = require('net');
 
-class DroidMouseClient {
+class SensorMouseClient {
     constructor(host = 'localhost', port = 8080) {
         this.host = host;
         this.port = port;
@@ -294,7 +294,7 @@ class DroidMouseClient {
 
 // Uso
 async function main() {
-    const client = new DroidMouseClient();
+    const client = new SensorMouseClient();
     await client.connect();
     client.sendSensorData(0.1, -0.05, 0.0, 0.02, -0.01, 9.81);
     client.close();
@@ -377,4 +377,4 @@ FILTER_CONFIG = {
 
 ---
 
-**Para más información**, consulta las [especificaciones técnicas](TECHNICAL_SPECS.md) o el [repositorio de GitHub](https://github.com/natone2/droidmouse). 
+**Para más información**, consulta las [especificaciones técnicas](TECHNICAL_SPECS.md) o el [repositorio de GitHub](https://github.com/natone2/sensormouse). 

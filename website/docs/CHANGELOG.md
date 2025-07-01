@@ -1,4 +1,4 @@
-# Changelog - DroidMouse
+# Changelog - SensorMouse
 
 Todos los cambios notables en este proyecto serán documentados en este archivo.
 
@@ -217,4 +217,4 @@ Para contribuir al proyecto:
 
 ---
 
-**Para más información**, consulta la [documentación del proyecto](https://github.com/natone2/droidmouse) o [contacta al equipo](mailto:dev@droidmouse.com). 
+**Para más información**, consulta la [documentación del proyecto](https://github.com/natone2/sensormouse) o [contacta al equipo](mailto:dev@sensormouse.com). 

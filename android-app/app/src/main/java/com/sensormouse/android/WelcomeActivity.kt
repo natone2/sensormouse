@@ -1,4 +1,4 @@
-package com.droidmouse.android
+package com.sensormouse.android
 
 import android.content.ClipData
 import android.content.ClipboardManager

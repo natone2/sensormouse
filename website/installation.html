@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instalación - DroidMouse</title>
-    <meta name="description" content="Guía completa de instalación de DroidMouse. Aprende a configurar el servidor Python y la aplicación Android paso a paso.">
+    <title>Instalación - SensorMouse</title>
+    <meta name="description" content="Guía completa de instalación de SensorMouse. Aprende a configurar el servidor Python y la aplicación Android paso a paso.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://droidmouse.com/installation.html">
-    <meta property="og:title" content="Instalación - DroidMouse">
-    <meta property="og:description" content="Guía completa de instalación de DroidMouse">
+    <meta property="og:url" content="https://sensormouse.com/installation.html">
+    <meta property="og:title" content="Instalación - SensorMouse">
+    <meta property="og:description" content="Guía completa de instalación de SensorMouse">
     <meta property="og:image" content="assets/images/og-image.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://droidmouse.com/installation.html">
-    <meta property="twitter:title" content="Instalación - DroidMouse">
-    <meta property="twitter:description" content="Guía completa de instalación de DroidMouse">
+    <meta property="twitter:url" content="https://sensormouse.com/installation.html">
+    <meta property="twitter:title" content="Instalación - SensorMouse">
+    <meta property="twitter:description" content="Guía completa de instalación de SensorMouse">
     <meta property="twitter:image" content="assets/images/og-image.png">
 
     <!-- Favicon -->
@@ -40,8 +40,8 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
-                <span class="logo-text">DroidMouse</span>
+                <img src="assets/images/logo.svg" alt="SensorMouse Logo" class="logo-img">
+                <span class="logo-text">SensorMouse</span>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -74,7 +74,7 @@
             <div class="section-header">
                 <h1 class="section-title">Guía de Instalación</h1>
                 <p class="section-description">
-                    Configura DroidMouse en tu PC y dispositivo Android paso a paso. 
+                    Configura SensorMouse en tu PC y dispositivo Android paso a paso. 
                     Sigue esta guía completa para tener tu ratón virtual funcionando en minutos.
                 </p>
             </div>
@@ -115,8 +115,8 @@
                 <h3 class="feature-title">Instalación del Servidor</h3>
                 <div class="feature-description">
                     <h4>1. Clonar el Repositorio</h4>
-                    <pre><code>git clone https://github.com/yourusername/droid-mouse.git
-cd droid-mouse</code></pre>
+                    <pre><code>git clone https://github.com/yourusername/sensormouse.git
+cd sensormouse</code></pre>
 
                     <h4>2. Crear Entorno Virtual (Recomendado)</h4>
                     <pre><code>python -m venv venv
@@ -147,7 +147,7 @@ python main.py</code></pre>
                 <div class="feature-description">
                     <h4>Opción 1: APK Precompilado</h4>
                     <ol>
-                        <li>Descarga el archivo APK desde la <a href="releases/droidmouse-debug.apk">página de releases</a></li>
+                        <li>Descarga el archivo APK desde la <a href="releases/sensormouse-debug.apk">página de releases</a></li>
                         <li>Habilita "Fuentes desconocidas" en tu dispositivo Android</li>
                         <li>Instala el APK descargado</li>
                     </ol>
@@ -179,7 +179,7 @@ python main.py</code></pre>
                     <ol>
                         <li>Asegúrate de que ambos dispositivos estén en la misma red WiFi</li>
                         <li>Inicia el servidor en tu PC</li>
-                        <li>Abre la aplicación DroidMouse en tu teléfono</li>
+                        <li>Abre la aplicación SensorMouse en tu teléfono</li>
                         <li>Introduce la IP de tu PC en la aplicación</li>
                         <li>Presiona "Conectar"</li>
                     </ol>
@@ -262,7 +262,7 @@ export DROIDMOUSE_DEBUG=true</code></pre>
 
                     <h4>Configuración del Firewall</h4>
                     <pre><code># En Windows
-netsh advfirewall firewall add rule name="DroidMouse" dir=in action=allow protocol=TCP localport=8080
+netsh advfirewall firewall add rule name="SensorMouse" dir=in action=allow protocol=TCP localport=8080
 
 # En Linux
 sudo ufw allow 8080/tcp</code></pre>
@@ -334,18 +334,18 @@ tail -f server.log
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="assets/images/logo.svg" alt="DroidMouse Logo" class="logo-img">
-                        <span>DroidMouse</span>
+                        <img src="assets/images/logo.svg" alt="SensorMouse Logo" class="logo-img">
+                        <span>SensorMouse</span>
                     </div>
                     <p>Controla tu PC con movimientos naturales usando sensores de tu dispositivo Android.</p>
                     <div class="social-links">
-                        <a href="https://github.com/natone2/droidmouse" aria-label="GitHub">
+                        <a href="https://github.com/natone2/sensormouse" aria-label="GitHub">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://twitter.com/droidmouse" aria-label="Twitter">
+                        <a href="https://twitter.com/sensormouse" aria-label="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="mailto:contact@droidmouse.com" aria-label="Email">
+                        <a href="mailto:contact@sensormouse.com" aria-label="Email">
                             <i class="fas fa-envelope"></i>
                         </a>
                     </div>
@@ -362,7 +362,7 @@ tail -f server.log
                 <div class="footer-section">
                     <h4>Desarrollo</h4>
                     <ul>
-                        <li><a href="https://github.com/natone2/droidmouse">GitHub</a></li>
+                        <li><a href="https://github.com/natone2/sensormouse">GitHub</a></li>
                         <li><a href="contributing.html">Contribuir</a></li>
                         <li><a href="changelog.html">Changelog</a></li>
                         <li><a href="roadmap.html">Roadmap</a></li>
@@ -373,13 +373,13 @@ tail -f server.log
                     <ul>
                         <li><a href="faq.html">FAQ</a></li>
                         <li><a href="troubleshooting.html">Solución de Problemas</a></li>
-                        <li><a href="https://github.com/natone2/droidmouse/issues">Reportar Bug</a></li>
-                        <li><a href="mailto:support@droidmouse.com">Contacto</a></li>
+                        <li><a href="https://github.com/natone2/sensormouse/issues">Reportar Bug</a></li>
+                        <li><a href="mailto:support@sensormouse.com">Contacto</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 DroidMouse. Todos los derechos reservados.</p>
+                <p>&copy; 2024 SensorMouse. Todos los derechos reservados.</p>
                 <p>Licenciado bajo <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL3</a></p>
                 <p class="author-credit">
                     Desarrollado por <a href="https://natone.pro" target="_blank" rel="noopener">Alex M</a>

@@ -1,4 +1,4 @@
-# DroidMouse 🐭
+# SensorMouse 🐭
 
 **Ratón virtual usando el giroscopio del móvil**
 
@@ -17,7 +17,7 @@ Transforma tu smartphone Android en un periférico de control inalámbrico media
 ## 📁 Estructura del Proyecto
 
 ```
-droid-mouse/
+sensormouse/
 ├── android-app/          # Aplicación Android (Kotlin)
 ├── server/              # Servidor multiplataforma (Python)
 ├── docs/                # Documentación técnica
@@ -67,4 +67,14 @@ python main.py
 
 ## 📄 Licencia
 
-Este proyecto está licenciado bajo la **GNU General Public License v3.0** - ver el archivo [LICENSE](LICENSE) para más detalles. 
+Este proyecto está bajo la Licencia GPLv3. Ver el archivo `LICENSE` para más detalles.
+
+## 📞 Soporte
+
+- **Issues**: [GitHub Issues](https://github.com/natone2/sensormouse/issues)
+- **Email**: contact@sensormouse.com
+- **Documentación**: [docs/](docs/)
+
+---
+
+Hecho con ❤️ para la comunidad open source 

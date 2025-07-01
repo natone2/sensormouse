@@ -1,10 +1,10 @@
-# Roadmap - DroidMouse
+# Roadmap - SensorMouse
 
-Este documento describe el plan de desarrollo futuro de DroidMouse, incluyendo características planificadas, mejoras y objetivos a largo plazo.
+Este documento describe el plan de desarrollo futuro de SensorMouse, incluyendo características planificadas, mejoras y objetivos a largo plazo.
 
 ## Visión General
 
-DroidMouse aspira a convertirse en la solución líder para control remoto de ratón usando dispositivos móviles, proporcionando una experiencia fluida, precisa y accesible para todos los usuarios.
+SensorMouse aspira a convertirse en la solución líder para control remoto de ratón usando dispositivos móviles, proporcionando una experiencia fluida, precisa y accesible para todos los usuarios.
 
 ## Objetivos Estratégicos
 
@@ -260,4 +260,4 @@ DroidMouse aspira a convertirse en la solución líder para control remoto de ra
 
 ---
 
-**¿Tienes ideas para el futuro de DroidMouse?** ¡Únete a la discusión en [GitHub Discussions](https://github.com/natone2/droidmouse/discussions) o [contacta al equipo](mailto:dev@droidmouse.com)! 
+**¿Tienes ideas para el futuro de SensorMouse?** ¡Únete a la discusión en [GitHub Discussions](https://github.com/natone2/sensormouse/discussions) o [contacta al equipo](mailto:dev@sensormouse.com)! 

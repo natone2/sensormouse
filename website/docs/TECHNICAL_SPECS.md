@@ -1,8 +1,8 @@
-# Especificaciones Técnicas - DroidMouse
+# Especificaciones Técnicas - SensorMouse
 
 ## Arquitectura del Sistema
 
-DroidMouse utiliza una arquitectura cliente-servidor distribuida con los siguientes componentes:
+SensorMouse utiliza una arquitectura cliente-servidor distribuida con los siguientes componentes:
 
 ```
 ┌─────────────────┐    TCP/IP    ┌─────────────────┐
@@ -82,7 +82,7 @@ class KalmanFilter {
 ### Estructura del Servidor
 
 ```python
-class DroidMouseServer:
+class SensorMouseServer:
     def __init__(self, host='0.0.0.0', port=8080):
         self.host = host
         self.port = port
@@ -248,4 +248,4 @@ LOGGING_CONFIG = {
 
 ---
 
-**Para más detalles técnicos**, consulta la [documentación de la API](API.md) o el [código fuente](https://github.com/natone2/droidmouse). 
+**Para más detalles técnicos**, consulta la [documentación de la API](API.md) o el [código fuente](https://github.com/natone2/sensormouse). 

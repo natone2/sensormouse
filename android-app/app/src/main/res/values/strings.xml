@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DroidMouse</string>
+    <string name="app_name">SensorMouse</string>
     <string name="app_description">Control de ratón virtual usando sensores IMU</string>
     
     <!-- Estados -->

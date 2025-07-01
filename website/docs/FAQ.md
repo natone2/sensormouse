@@ -1,8 +1,8 @@
-# Preguntas Frecuentes - DroidMouse
+# Preguntas Frecuentes - SensorMouse
 
 ## Instalación y Configuración
 
-### ¿Qué requisitos necesito para usar DroidMouse?
+### ¿Qué requisitos necesito para usar SensorMouse?
 
 **Servidor (PC):**
 - Python 3.8 o superior
@@ -16,8 +16,8 @@
 
 ### ¿Cómo instalo el servidor en mi PC?
 
-1. Clona el repositorio: `git clone https://github.com/natone2/droidmouse.git`
-2. Navega al directorio: `cd droid-mouse`
+1. Clona el repositorio: `git clone https://github.com/natone2/sensormouse.git`
+2. Navega al directorio: `cd sensormouse`
 3. Crea un entorno virtual: `python -m venv venv`
 4. Activa el entorno virtual:
    - Windows: `venv\Scripts\activate`
@@ -25,9 +25,9 @@
 5. Instala dependencias: `pip install -r server/requirements.txt`
 6. Ejecuta el servidor: `cd server && python main.py`
 
-### ¿Puedo usar DroidMouse sin compilar la aplicación Android?
+### ¿Puedo usar SensorMouse sin compilar la aplicación Android?
 
-Sí, puedes descargar el APK precompilado desde la [página de releases](releases/droidmouse-debug.apk) e instalarlo directamente en tu dispositivo Android.
+Sí, puedes descargar el APK precompilado desde la [página de releases](releases/sensormouse-debug.apk) e instalarlo directamente en tu dispositivo Android.
 
 ## Problemas de Conexión
 
@@ -135,7 +135,7 @@ pip install -r requirements.txt --force-reinstall
 
 ### ¿Funciona en todos los dispositivos Android?
 
-DroidMouse requiere:
+SensorMouse requiere:
 - Android 6.0 o superior
 - Giroscopio integrado
 - Acelerómetro integrado
@@ -150,7 +150,7 @@ DroidMouse requiere:
 
 ### ¿Funciona en iOS?
 
-Actualmente DroidMouse solo está disponible para Android. Una versión iOS está en desarrollo.
+Actualmente SensorMouse solo está disponible para Android. Una versión iOS está en desarrollo.
 
 ### ¿Puedo usar múltiples dispositivos simultáneamente?
 
@@ -158,7 +158,7 @@ Sí, el servidor puede manejar múltiples conexiones. Cada dispositivo controlar
 
 ## Problemas de Seguridad
 
-### ¿Es seguro usar DroidMouse?
+### ¿Es seguro usar SensorMouse?
 
 **Medidas de seguridad:**
 - Conexión local (no requiere internet)
@@ -171,20 +171,20 @@ Sí, el servidor puede manejar múltiples conexiones. Cada dispositivo controlar
 - No expongas el puerto a internet
 - Mantén actualizado el software
 
-### ¿DroidMouse envía datos a servidores externos?
+### ¿SensorMouse envía datos a servidores externos?
 
-No, DroidMouse funciona completamente de forma local. No se envían datos a servidores externos.
+No, SensorMouse funciona completamente de forma local. No se envían datos a servidores externos.
 
 ## Problemas de Desarrollo
 
 ### ¿Puedo modificar el código?
 
-Sí, DroidMouse es software de código abierto bajo licencia GPL3. Puedes modificar, distribuir y contribuir al proyecto.
+Sí, SensorMouse es software de código abierto bajo licencia GPL3. Puedes modificar, distribuir y contribuir al proyecto.
 
 ### ¿Cómo reporto un bug?
 
 1. Verifica que no esté en esta FAQ
-2. Busca en los [issues existentes](https://github.com/natone2/droidmouse/issues)
+2. Busca en los [issues existentes](https://github.com/natone2/sensormouse/issues)
 3. Crea un nuevo issue con:
    - Descripción detallada del problema
    - Pasos para reproducir
@@ -230,17 +230,17 @@ Sí, DroidMouse es software de código abierto bajo licencia GPL3. Puedes modifi
 ### ¿Dónde puedo obtener ayuda adicional?
 
 - **Documentación**: Consulta las [guías de instalación](INSTALLATION.md) y [técnicas](TECHNICAL_SPECS.md)
-- **GitHub Issues**: [Reporta problemas](https://github.com/natone2/droidmouse/issues)
-- **Discord**: Únete a nuestro [servidor de Discord](https://discord.gg/droidmouse)
-- **Email**: Envía un email a support@droidmouse.com
+- **GitHub Issues**: [Reporta problemas](https://github.com/natone2/sensormouse/issues)
+- **Discord**: Únete a nuestro [servidor de Discord](https://discord.gg/sensormouse)
+- **Email**: Envía un email a support@sensormouse.com
 
 ### ¿Hay una comunidad de usuarios?
 
 Sí, puedes unirte a:
-- [GitHub Discussions](https://github.com/natone2/droidmouse/discussions)
-- [Discord Server](https://discord.gg/droidmouse)
-- [Reddit Community](https://reddit.com/r/droidmouse)
+- [GitHub Discussions](https://github.com/natone2/sensormouse/discussions)
+- [Discord Server](https://discord.gg/sensormouse)
+- [Reddit Community](https://reddit.com/r/sensormouse)
 
 ---
 
-**¿No encontraste la respuesta?** Consulta nuestra [guía de solución de problemas](TROUBLESHOOTING.md) o [contacta con soporte](mailto:support@droidmouse.com). 
+**¿No encontraste la respuesta?** Consulta nuestra [guía de solución de problemas](TROUBLESHOOTING.md) o [contacta con soporte](mailto:support@sensormouse.com). 

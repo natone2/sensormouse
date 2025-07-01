@@ -101,7 +101,7 @@
             android:id="@+id/appTitleBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DroidMouse Demo"
+            android:text="SensorMouse Demo"
             android:textColor="#fff"
             android:textSize="18sp"
             android:gravity="center"

@@ -1,4 +1,4 @@
-# Guía de Solución de Problemas - DroidMouse
+# Guía de Solución de Problemas - SensorMouse
 
 ## Diagnóstico Inicial
 
@@ -105,7 +105,7 @@ netsh advfirewall show allprofiles  # Windows
 sudo ufw allow 8080/tcp
 
 # Windows
-netsh advfirewall firewall add rule name="DroidMouse" dir=in action=allow protocol=TCP localport=8080
+netsh advfirewall firewall add rule name="SensorMouse" dir=in action=allow protocol=TCP localport=8080
 
 # macOS
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/bin/python3
@@ -167,14 +167,14 @@ ifconfig | grep "inet "  # macOS
 #### Diagnóstico
 ```bash
 # Verificar permisos en Android
-# Configuración > Aplicaciones > DroidMouse > Permisos
+# Configuración > Aplicaciones > SensorMouse > Permisos
 # Asegúrate de que "Sensores" esté habilitado
 ```
 
 #### Soluciones
 
 **Permisos denegados:**
-1. Ve a Configuración > Aplicaciones > DroidMouse
+1. Ve a Configuración > Aplicaciones > SensorMouse
 2. Permisos > Habilitar "Sensores"
 3. Reinicia la aplicación
 
@@ -286,7 +286,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('droidmouse.log'),
+        logging.FileHandler('sensormouse.log'),
         logging.StreamHandler()
     ]
 )
@@ -319,7 +319,7 @@ htop
 iftop -i wlan0
 
 # Monitorear logs
-tail -f droidmouse.log
+tail -f sensormouse.log
 ```
 
 ## Problemas Específicos por Plataforma
@@ -379,7 +379,7 @@ sudo dnf install python3-devel python3-pip
 ```bash
 # 1. Detener todos los procesos
 pkill -f "python.*main.py"
-pkill -f "droidmouse"
+pkill -f "sensormouse"
 
 # 2. Limpiar archivos temporales
 rm -rf __pycache__
@@ -412,7 +412,7 @@ Al reportar un problema, incluye:
 1. **Información del sistema:**
    - Sistema operativo y versión
    - Versión de Python
-   - Versión de DroidMouse
+   - Versión de SensorMouse
 
 2. **Logs de error:**
    - Logs del servidor
@@ -427,9 +427,9 @@ Al reportar un problema, incluye:
 ### Canales de Soporte
 
 - **GitHub Issues**: Para bugs y problemas técnicos
-- **Email**: support@droidmouse.com para problemas críticos
+- **Email**: support@sensormouse.com para problemas críticos
 - **Discord**: Para ayuda en tiempo real
 
 ---
 
-**¿Necesitas ayuda adicional?** Consulta la [FAQ](FAQ.md) o [contacta con soporte](mailto:support@droidmouse.com). 
+**¿Necesitas ayuda adicional?** Consulta la [FAQ](FAQ.md) o [contacta con soporte](mailto:support@sensormouse.com). 

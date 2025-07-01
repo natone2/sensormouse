@@ -1,6 +1,6 @@
-# Guía de Contribución - DroidMouse
+# Guía de Contribución - SensorMouse
 
-¡Gracias por tu interés en contribuir a DroidMouse! Este documento te guiará a través del proceso de contribución.
+¡Gracias por tu interés en contribuir a SensorMouse! Este documento te guiará a través del proceso de contribución.
 
 ## Tabla de Contenidos
 
@@ -106,8 +106,8 @@ android-sdk
 
 ```bash
 # 1. Fork del repositorio
-git clone https://github.com/natone2/droidmouse.git
-cd droid-mouse
+git clone https://github.com/natone2/sensormouse.git
+cd sensormouse
 
 # 2. Configurar entorno Python
 python -m venv venv
@@ -127,7 +127,7 @@ pre-commit install
 ### Estructura del Proyecto
 
 ```
-droid-mouse/
+sensormouse/
 ├── android-app/          # Aplicación Android
 │   ├── app/
 │   ├── build.gradle
@@ -565,7 +565,7 @@ Para ser listado como contribuidor:
 - **GitHub Issues**: Para bugs y features
 - **GitHub Discussions**: Para preguntas generales
 - **Discord**: Para comunicación en tiempo real
-- **Email**: dev@droidmouse.com para asuntos privados
+- **Email**: dev@sensormouse.com para asuntos privados
 
 ### Mantenedores
 
@@ -574,4 +574,4 @@ Para ser listado como contribuidor:
 
 ---
 
-**¡Gracias por contribuir a DroidMouse!** Tu trabajo ayuda a hacer este proyecto mejor para todos. 
+**¡Gracias por contribuir a SensorMouse!** Tu trabajo ayuda a hacer este proyecto mejor para todos. 

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.droidmouse.android'
+    namespace 'com.sensormouse.android'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.droidmouse.android"
+        applicationId "com.sensormouse.android"
         minSdk 24
         targetSdk 34
         versionCode 1

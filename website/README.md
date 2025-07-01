@@ -1,6 +1,6 @@
-# DroidMouse Website
+# SensorMouse Website
 
-Sitio web profesional para el proyecto DroidMouse - Control Virtual de Ratón con Android.
+Sitio web profesional para el proyecto SensorMouse - Control Virtual de Ratón con Android.
 
 ## 🚀 Características
 
@@ -40,8 +40,8 @@ website/
 
 1. **Clona el repositorio**:
    ```bash
-   git clone https://github.com/yourusername/droid-mouse.git
-   cd droid-mouse/website
+   git clone https://github.com/yourusername/sensormouse.git
+   cd sensormouse/website
    ```
 
 2. **Abre en tu navegador**:
@@ -191,8 +191,8 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 📞 Soporte
 
-- **Issues**: [GitHub Issues](https://github.com/natone2/droidmouse/issues)
-- **Email**: contact@droidmouse.com
+- **Issues**: [GitHub Issues](https://github.com/natone2/sensormouse/issues)
+- **Email**: contact@sensormouse.com
 - **Documentación**: [docs/](docs/)
 
 ---

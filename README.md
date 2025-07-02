@@ -2,7 +2,7 @@
 
 **Controla tu PC con el móvil usando el giroscopio**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 [![Platform: Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com/)
 [![Language: Kotlin](https://img.shields.io/badge/Language-Kotlin-blue.svg)](https://kotlinlang.org/)
 
@@ -20,9 +20,7 @@ SensorMouse es una aplicación Android que convierte tu smartphone en un ratón 
 - 🌙 **Temas personalizables** (versión Pro)
 - 📈 **Estadísticas de uso** (versión Pro)
 
-## 🚀 Modelo de Negocio
-
-Este proyecto es **código abierto** pero **monetizado**:
+## 🚀 Versiones
 
 ### 📦 Versión Gratuita (30 días de prueba)
 - ✅ Control completo del ratón
@@ -95,20 +93,6 @@ sensormouse/
 └── README.md
 ```
 
-## 💰 Monetización
-
-### ¿Por qué monetizar código abierto?
-
-1. **Transparencia**: Los usuarios pueden ver exactamente qué hace la app
-2. **Confianza**: Código revisable = mayor confianza
-3. **Comunidad**: Desarrolladores pueden contribuir y mejorar
-4. **Sostenibilidad**: Permite seguir desarrollando y manteniendo
-
-### Estrategia de precios:
-- **€3.99** - Precio psicológico atractivo
-- **Pago único** - Sin suscripciones molestas
-- **30 días gratis** - Tiempo suficiente para valorar la app
-
 ## 🤝 Contribuir
 
 ¡Las contribuciones son bienvenidas! 
@@ -129,9 +113,7 @@ sensormouse/
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
-
-**Nota**: Aunque el código es open source, la distribución de APKs compilados está restringida. Solo el desarrollador original puede distribuir builds oficiales.
+Este proyecto está bajo la Licencia GPL-3.0 - ver el archivo [LICENSE](LICENSE) para detalles.
 
 ## 🔗 Enlaces
 

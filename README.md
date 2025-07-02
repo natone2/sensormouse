@@ -46,6 +46,8 @@ SensorMouse es una aplicación Android que convierte tu smartphone en un ratón 
 3. Conecta ambos dispositivos a la misma red WiFi
 4. ¡Disfruta!
 
+📖 **[Ver guía completa de uso](docs/USAGE_GUIDE.md)** con capturas de pantalla y pasos detallados
+
 ### Para desarrolladores:
 
 ```bash
@@ -70,64 +72,13 @@ pip install -r requirements.txt
 python main.py
 ```
 
+🖥️ **[Ver capturas del servidor](docs/images/server_screenshots.md)** - Ejemplos de terminal y configuración
+
+## 📸 Capturas de Pantalla
+
+📱 **[Capturas de la app](docs/images/app_screenshots.md)** - Interfaz de usuario y estados
+🔧 **[Diagramas de instalación](docs/images/installation_diagram.md)** - Flujos paso a paso
+
 ## 📁 Estructura del Proyecto
 
 ```
-sensormouse/
-├── android-app/          # Aplicación Android (Kotlin)
-│   ├── app/
-│   │   ├── src/main/
-│   │   │   ├── java/com/sensormouse/android/
-│   │   │   │   ├── billing/          # Sistema de pagos
-│   │   │   │   ├── premium/          # Gestión de funcionalidades Pro
-│   │   │   │   ├── MainActivity.kt   # Actividad principal
-│   │   │   │   └── WelcomeActivity.kt
-│   │   │   └── res/                  # Recursos (layouts, drawables, etc.)
-│   │   └── build.gradle
-├── server/               # Servidor Python
-│   ├── main.py          # Servidor principal
-│   ├── utils.py         # Utilidades
-│   └── requirements.txt
-├── docs/                # Documentación
-├── scripts/             # Scripts de instalación
-└── README.md
-```
-
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! 
-
-### Cómo contribuir:
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-### Áreas de mejora:
-- 🎨 Mejoras de UI/UX
-- 🐛 Corrección de bugs
-- 📱 Nuevas funcionalidades
-- 🌍 Traducciones
-- 📚 Documentación
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia GPL-3.0 - ver el archivo [LICENSE](LICENSE) para detalles.
-
-## 🔗 Enlaces
-
-- 📱 [Google Play Store](https://play.google.com/store/apps/details?id=com.sensormouse.android)
-- 🐛 [Reportar un bug](https://github.com/natone2/sensormouse/issues)
-- 💡 [Solicitar feature](https://github.com/natone2/sensormouse/issues)
-- 📧 [Contacto](mailto:me@natone.pro)
-
-## ⭐ Agradecimientos
-
-- Comunidad Android por las librerías
-- Google Play Billing por el sistema de pagos
-- Contribuidores del proyecto
-
----
-
-**¿Te gusta SensorMouse? ¡Dale una ⭐ al repositorio!** 

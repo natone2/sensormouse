@@ -120,7 +120,7 @@ Este proyecto está bajo la Licencia GPL-3.0 - ver el archivo [LICENSE](LICENSE)
 - 📱 [Google Play Store](https://play.google.com/store/apps/details?id=com.sensormouse.android)
 - 🐛 [Reportar un bug](https://github.com/natone2/sensormouse/issues)
 - 💡 [Solicitar feature](https://github.com/natone2/sensormouse/issues)
-- 📧 [Contacto](mailto:alex@example.com)
+- �� [Contacto](mailto:me@natone.pro)
 
 ## ⭐ Agradecimientos
 

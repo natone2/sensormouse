@@ -1,439 +1,437 @@
 package com.sensormouse.android
 
-import android.content.Context
+import android.Manifest
+import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+import com.sensormouse.android.billing.BillingManager
 import com.sensormouse.android.databinding.ActivityMainBinding
-import kotlinx.coroutines.*
-import java.io.OutputStream
+import com.sensormouse.android.premium.PremiumManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.io.IOException
 import java.net.Socket
-import java.net.SocketException
-import kotlin.math.abs
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
     
+    companion object {
+        private const val TAG = "MainActivity"
+        private const val PERMISSION_REQUEST_CODE = 123
+        private const val SESSION_UPDATE_INTERVAL = 1000L // 1 segundo
+    }
+    
     private lateinit var binding: ActivityMainBinding
     private lateinit var sensorManager: SensorManager
-    private var gyroscopeSensor: Sensor? = null
-    private var accelerometerSensor: Sensor? = null
+    private lateinit var gyroscope: Sensor
+    private lateinit var accelerometer: Sensor
     
     private var socket: Socket? = null
-    private var outputStream: OutputStream? = null
     private var isConnected = false
     private var isActive = false
     
-    private var serverIp = "192.168.1.100"
-    private var serverPort = 8080
+    // Monetización
+    private lateinit var billingManager: BillingManager
+    private lateinit var premiumManager: PremiumManager
+    private var sessionUpdateHandler = Handler(Looper.getMainLooper())
+    private var sessionUpdateRunnable: Runnable? = null
     
-    // Filtros de Kalman para suavizado
-    private val kalmanX = KalmanFilter()
-    private val kalmanY = KalmanFilter()
+    // Sensores
+    private var gyroX = 0f
+    private var gyroY = 0f
+    private var accelZ = 0f
+    private var sensitivity = 1.0f
     
     // Calibración
-    private val calibrationSamples = mutableListOf<SensorData>()
-    private var isCalibrated = false
-    private var gyroBias = SensorData(0f, 0f, 0f)
-    
-    // Configuración
-    private val sensorDelay = SensorManager.SENSOR_DELAY_GAME
-    private val sampleRate = 50 // Hz
-    
-    companion object {
-        private const val TAG = "SensorMouse"
-        private const val CALIBRATION_SAMPLES = 100
-    }
+    private var calibratedGyroX = 0f
+    private var calibratedGyroY = 0f
+    private var calibratedAccelZ = 0f
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        setupSensors()
+        // Inicializar monetización
+        initializeMonetization()
+        
+        // Inicializar sensores
+        initializeSensors()
+        
+        // Configurar UI
         setupUI()
-        setupClickListeners()
-
-        // --- NUEVO: Enlazar botones de mouse ---
-        binding.btnLeft.setOnClickListener {
-            animateMouseButton(binding.btnLeft)
-            sendCommand("mouse_left_click")
+        
+        // Inicializar publicidad
+        initializeAds()
+        
+        // Iniciar actualización de sesión
+        startSessionUpdates()
+    }
+    
+    private fun initializeMonetization() {
+        billingManager = BillingManager(this)
+        premiumManager = PremiumManager(this)
+        
+        // Observar cambios en el estado de usuario pro
+        lifecycleScope.launch {
+            billingManager.isProUser.collectLatest { isPro ->
+                premiumManager.setProUser(isPro)
+                updateUIForUserType(isPro)
+            }
         }
-        binding.btnMiddle.setOnClickListener {
-            animateMouseButton(binding.btnMiddle)
-            sendCommand("mouse_middle_click")
-        }
-        binding.btnRight.setOnClickListener {
-            animateMouseButton(binding.btnRight)
-            sendCommand("mouse_right_click")
+        
+        // Observar estado de compra
+        lifecycleScope.launch {
+            billingManager.purchaseStatus.collectLatest { status ->
+                when (status) {
+                    is com.sensormouse.android.billing.PurchaseStatus.Purchased -> {
+                        Toast.makeText(this@MainActivity, "¡Gracias por comprar SensorMouse Pro!", Toast.LENGTH_LONG).show()
+                    }
+                    is com.sensormouse.android.billing.PurchaseStatus.Error -> {
+                        Toast.makeText(this@MainActivity, "Error: ${status.message}", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
+            }
         }
     }
     
-    private fun setupSensors() {
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
-        accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+    private fun initializeSensors() {
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)!!
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
         
-        if (gyroscopeSensor == null || accelerometerSensor == null) {
+        if (gyroscope == null || accelerometer == null) {
             Toast.makeText(this, "Sensores no disponibles", Toast.LENGTH_LONG).show()
             finish()
         }
     }
     
     private fun setupUI() {
-        binding.apply {
-            statusText.text = "Desconectado"
-            serverIpInput.setText(serverIp)
-            serverPortInput.setText(serverPort.toString())
-            sensitivitySlider.value = 1.0f
-        }
-    }
-    
-    private fun setupClickListeners() {
-        binding.apply {
-            connectButton.setOnClickListener {
-                if (isConnected) {
-                    disconnect()
-                } else {
-                    connect()
-                }
-            }
-            
-            calibrateButton.setOnClickListener {
-                startCalibration()
-            }
-            
-            activateButton.setOnClickListener {
-                if (isConnected) {
-                    toggleActivation()
-                } else {
-                    Toast.makeText(this@MainActivity, "Conecta primero al servidor", Toast.LENGTH_SHORT).show()
-                }
-            }
-            
-            sensitivitySlider.addOnChangeListener { _, value, fromUser ->
+        // Configurar SeekBar de sensibilidad
+        binding.sensitivitySeekBar.setOnSeekBarChangeListener(object : android.widget.SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: android.widget.SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    updateSensitivity(value)
-                }
-            }
-        }
-    }
-    
-    private fun connect() {
-        try {
-            serverIp = binding.serverIpInput.text.toString()
-            serverPort = binding.serverPortInput.text.toString().toInt()
-            
-            if (serverIp.isEmpty() || serverPort <= 0) {
-                Toast.makeText(this, "IP o puerto inválido", Toast.LENGTH_SHORT).show()
-                return
-            }
-            
-            binding.connectButton.isEnabled = false
-            binding.statusText.text = "Conectando..."
-            
-            lifecycleScope.launch(Dispatchers.IO) {
-                try {
-                    socket = Socket(serverIp, serverPort)
-                    outputStream = socket?.getOutputStream()
-                    isConnected = true
-                    
-                    runOnUiThread {
-                        binding.statusText.text = "Conectado"
-                        binding.connectButton.text = "Desconectar"
-                        binding.connectButton.isEnabled = true
-                        Toast.makeText(this@MainActivity, "Conectado al servidor", Toast.LENGTH_SHORT).show()
-                    }
-                    
-                    // Iniciar envío de datos
-                    startSensorDataTransmission()
-                    
-                } catch (e: Exception) {
-                    runOnUiThread {
-                        binding.statusText.text = "Error de conexión"
-                        binding.connectButton.isEnabled = true
-                        Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
-                    }
+                    val minSensitivity = premiumManager.getMinSensitivity()
+                    val maxSensitivity = premiumManager.getMaxSensitivity()
+                    sensitivity = minSensitivity + (progress / 50f) * (maxSensitivity - minSensitivity)
+                    binding.sensitivityValueText.text = "${String.format("%.1f", sensitivity)}x"
                 }
             }
             
-        } catch (e: Exception) {
-            runOnUiThread {
-                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-                binding.connectButton.isEnabled = true
+            override fun onStartTrackingTouch(seekBar: android.widget.SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: android.widget.SeekBar?) {}
+        })
+        
+        // Configurar botones
+        binding.connectButton.setOnClickListener { toggleConnection() }
+        binding.calibrateButton.setOnClickListener { calibrateSensors() }
+        binding.upgradeButton.setOnClickListener { showUpgradeDialog() }
+        
+        // Configurar botones de ratón
+        binding.leftClickButton.setOnClickListener { sendMouseClick("left") }
+        binding.middleClickButton.setOnClickListener { sendMouseClick("middle") }
+        binding.rightClickButton.setOnClickListener { sendMouseClick("right") }
+        
+        // Configurar límites iniciales según tipo de usuario
+        updateUIForUserType(premiumManager.isProUser.value)
+    }
+    
+    private fun updateUIForUserType(isPro: Boolean) {
+        if (isPro) {
+            // Usuario Pro - sin limitaciones
+            binding.sessionInfoCard.visibility = View.GONE
+            binding.upgradeButton.visibility = View.GONE
+            binding.adBanner.visibility = View.GONE
+        } else {
+            // Usuario gratuito - mostrar limitaciones
+            binding.sessionInfoCard.visibility = View.VISIBLE
+            binding.upgradeButton.visibility = View.VISIBLE
+            binding.adBanner.visibility = View.VISIBLE
+            
+            // Configurar límites de sensibilidad
+            val minSensitivity = premiumManager.getMinSensitivity()
+            val maxSensitivity = premiumManager.getMaxSensitivity()
+            binding.sensitivitySeekBar.max = 50
+            binding.sensitivitySeekBar.progress = 10 // 1.0x por defecto
+        }
+    }
+    
+    private fun initializeAds() {
+        MobileAds.initialize(this) {}
+        
+        val adRequest = AdRequest.Builder().build()
+        binding.adBanner.loadAd(adRequest)
+    }
+    
+    private fun startSessionUpdates() {
+        sessionUpdateRunnable = object : Runnable {
+            override fun run() {
+                updateSessionInfo()
+                sessionUpdateHandler.postDelayed(this, SESSION_UPDATE_INTERVAL)
+            }
+        }
+        sessionUpdateHandler.post(sessionUpdateRunnable!!)
+    }
+    
+    private fun updateSessionInfo() {
+        if (!premiumManager.isProUser.value) {
+            premiumManager.updateUsageTime()
+            
+            val remainingDays = premiumManager.getRemainingTrialDays()
+            val progress = premiumManager.getTrialProgress()
+            
+            // Actualizar UI
+            binding.sessionProgressBar.progress = (progress * 100).toInt()
+            binding.sessionTimeText.text = "$remainingDays días restantes"
+            
+            // Verificar si el trial expiró
+            if (premiumManager.isTrialExpired()) {
+                showTrialExpiredDialog()
             }
         }
     }
     
-    private fun disconnect() {
-        isConnected = false
-        isActive = false
-        
-        try {
-            socket?.close()
-            outputStream?.close()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error cerrando conexión", e)
-        }
-        
-        socket = null
-        outputStream = null
-        
-        binding.apply {
-            statusText.text = "Desconectado"
-            connectButton.text = "Conectar"
-            activateButton.text = "Activar"
-        }
-        
-        runOnUiThread {
-            Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show()
+    private fun formatTime(minutes: Long): String {
+        val hours = minutes / 60
+        val mins = minutes % 60
+        return if (hours > 0) {
+            String.format("%d:%02d", hours, mins)
+        } else {
+            String.format("%d:%02d", mins, 0)
         }
     }
     
-    private fun startCalibration() {
+    private fun showTrialExpiredDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Período de Prueba Expirado")
+            .setMessage("Has completado los 30 días de prueba gratuita. ¿Quieres actualizar a SensorMouse Pro para seguir usando la app?")
+            .setPositiveButton("Upgrade a Pro") { _, _ ->
+                showUpgradeDialog()
+            }
+            .setNegativeButton("Más Tarde") { _, _ ->
+                // El usuario puede seguir viendo la app pero no usarla
+            }
+            .setCancelable(false)
+            .show()
+    }
+    
+    private fun showUpgradeDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("🚀 SensorMouse Pro")
+            .setMessage("""
+                Desbloquea todas las funcionalidades:
+                
+                ✅ Uso ilimitado (sin límite de 30 días)
+                ✅ Sensibilidad personalizable (0.1x - 5.0x)
+                ✅ Calibración avanzada con múltiples puntos
+                ✅ Múltiples perfiles guardados
+                ✅ Sin publicidad
+                ✅ Temas personalizados
+                ✅ Estadísticas de uso
+                ✅ Backup en la nube
+                
+                Precio: €3.99 (pago único)
+            """.trimIndent())
+            .setPositiveButton("Comprar Ahora") { _, _ ->
+                billingManager.launchBillingFlow(this)
+            }
+            .setNegativeButton("Más Tarde", null)
+            .show()
+    }
+    
+    private fun toggleConnection() {
         if (!isConnected) {
-            Toast.makeText(this, "Conecta primero al servidor", Toast.LENGTH_SHORT).show()
+            connectToServer()
+        } else {
+            disconnectFromServer()
+        }
+    }
+    
+    private fun connectToServer() {
+        val serverIp = binding.serverIpInput.text.toString()
+        val serverPort = binding.serverPortInput.text.toString().toIntOrNull() ?: 5000
+        
+        if (serverIp.isEmpty()) {
+            Toast.makeText(this, "Introduce la IP del servidor", Toast.LENGTH_SHORT).show()
             return
         }
         
-        calibrationSamples.clear()
-        isCalibrated = false
-        binding.calibrateButton.text = "Calibrando..."
-        binding.calibrateButton.isEnabled = false
+        lifecycleScope.launch {
+            try {
+                socket = Socket(serverIp, serverPort)
+                isConnected = true
+                updateConnectionStatus(true)
+                Toast.makeText(this@MainActivity, "Conectado al servidor", Toast.LENGTH_SHORT).show()
+                
+                // Iniciar envío de datos
+                startDataTransmission()
+                
+            } catch (e: IOException) {
+                Log.e(TAG, "Error conectando al servidor", e)
+                Toast.makeText(this@MainActivity, "Error conectando al servidor", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    
+    private fun disconnectFromServer() {
+        try {
+            socket?.close()
+            socket = null
+            isConnected = false
+            isActive = false
+            updateConnectionStatus(false)
+            Toast.makeText(this, "Desconectado del servidor", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            Log.e(TAG, "Error desconectando del servidor", e)
+        }
+    }
+    
+    private fun updateConnectionStatus(connected: Boolean) {
+        if (connected) {
+            binding.statusText.text = "Conectado"
+            binding.statusIcon.setImageResource(R.drawable.ic_status_online)
+            binding.connectButton.text = "Desconectar"
+        } else {
+            binding.statusText.text = "Desconectado"
+            binding.statusIcon.setImageResource(R.drawable.ic_status_offline)
+            binding.connectButton.text = "Conectar"
+        }
+    }
+    
+    private fun calibrateSensors() {
+        if (!checkPermissions()) {
+            requestPermissions()
+            return
+        }
         
-        Toast.makeText(this, "Mantén el dispositivo quieto durante 2 segundos", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Mantén el dispositivo quieto durante 3 segundos", Toast.LENGTH_LONG).show()
         
         lifecycleScope.launch {
-            delay(2000L) // 2 segundos de calibración
+            delay(3000)
             
-            if (calibrationSamples.size >= CALIBRATION_SAMPLES) {
-                calculateBias()
-                isCalibrated = true
-                binding.calibrateButton.text = "Recalibrar"
-                binding.calibrateButton.isEnabled = true
-                Toast.makeText(this@MainActivity, "Calibración completada", Toast.LENGTH_SHORT).show()
+            calibratedGyroX = gyroX
+            calibratedGyroY = gyroY
+            calibratedAccelZ = accelZ
+            
+            Toast.makeText(this@MainActivity, "Calibración completada", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private fun startDataTransmission() {
+        if (!checkPermissions()) {
+            requestPermissions()
+            return
+        }
+        
+        isActive = true
+        sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_GAME)
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
+    }
+    
+    private fun sendMouseClick(button: String) {
+        if (!isConnected) {
+            Toast.makeText(this, "No conectado al servidor", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        lifecycleScope.launch {
+            try {
+                val message = "CLICK:$button\n"
+                socket?.getOutputStream()?.write(message.toByteArray())
+            } catch (e: IOException) {
+                Log.e(TAG, "Error enviando clic", e)
+                disconnectFromServer()
+            }
+        }
+    }
+    
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (!isActive || !isConnected) return
+        
+        event?.let {
+            when (it.sensor.type) {
+                Sensor.TYPE_GYROSCOPE -> {
+                    gyroX = it.values[0]
+                    gyroY = it.values[1]
+                }
+                Sensor.TYPE_ACCELEROMETER -> {
+                    accelZ = it.values[2]
+                }
+            }
+            
+            // Enviar datos al servidor
+            sendSensorData()
+        }
+    }
+    
+    private fun sendSensorData() {
+        val deltaX = (gyroX - calibratedGyroX) * sensitivity
+        val deltaY = (gyroY - calibratedGyroY) * sensitivity
+        
+        val message = "MOVE:$deltaX,$deltaY\n"
+        
+        lifecycleScope.launch {
+            try {
+                socket?.getOutputStream()?.write(message.toByteArray())
+            } catch (e: IOException) {
+                Log.e(TAG, "Error enviando datos de sensor", e)
+                disconnectFromServer()
+            }
+        }
+    }
+    
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    
+    private fun checkPermissions(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
+    }
+    
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
+            PERMISSION_REQUEST_CODE
+        )
+    }
+    
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permisos concedidos", Toast.LENGTH_SHORT).show()
             } else {
-                binding.calibrateButton.text = "Calibrar"
-                binding.calibrateButton.isEnabled = true
-                Toast.makeText(this@MainActivity, "Calibración fallida", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permisos necesarios para el funcionamiento", Toast.LENGTH_LONG).show()
             }
         }
-    }
-    
-    private fun calculateBias() {
-        if (calibrationSamples.isEmpty()) return
-        
-        val avgX = calibrationSamples.map { it.x }.average().toFloat()
-        val avgY = calibrationSamples.map { it.y }.average().toFloat()
-        val avgZ = calibrationSamples.map { it.z }.average().toFloat()
-        
-        gyroBias = SensorData(avgX, avgY, avgZ)
-        Log.d(TAG, "Bias calculado: $gyroBias")
-    }
-    
-    private fun toggleActivation() {
-        isActive = !isActive
-        
-        binding.activateButton.text = if (isActive) "Desactivar" else "Activar"
-        
-        val command = if (isActive) "activate" else "deactivate"
-        sendCommand(command)
-        
-        Toast.makeText(this, if (isActive) "Control activado" else "Control desactivado", Toast.LENGTH_SHORT).show()
-    }
-    
-    private fun updateSensitivity(value: Float) {
-        val sensitivity = value * 2.0f // Escalar de 0-1 a 0-2
-        sendCommand("sensitivity:$sensitivity")
-    }
-    
-    private fun startSensorDataTransmission() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            while (isConnected) {
-                try {
-                    delay((1000L / sampleRate)) // 50 Hz
-                    
-                    if (isActive && isCalibrated) {
-                        // Los datos se envían en onSensorChanged
-                    }
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error en transmisión", e)
-                    break
-                }
-            }
-        }
-    }
-    
-    private fun sendSensorData(gyro: SensorData, accel: SensorData) {
-        if (!isConnected || !isActive) return
-        
-        try {
-            val data = mapOf(
-                "type" to "sensor_data",
-                "gyro" to mapOf(
-                    "x" to gyro.x,
-                    "y" to gyro.y,
-                    "z" to gyro.z
-                ),
-                "accel" to mapOf(
-                    "x" to accel.x,
-                    "y" to accel.y,
-                    "z" to accel.z
-                )
-            )
-            
-            val json = com.google.gson.Gson().toJson(data)
-            outputStream?.write("$json\n".toByteArray())
-            outputStream?.flush()
-            
-        } catch (e: Exception) {
-            Log.e(TAG, "Error enviando datos", e)
-            if (e is SocketException) {
-                runOnUiThread {
-                    disconnect()
-                }
-            }
-        }
-    }
-    
-    private fun sendCommand(command: String) {
-        if (!isConnected) return
-        
-        try {
-            val data = mapOf(
-                "type" to "command",
-                "command" to command
-            )
-            
-            val json = com.google.gson.Gson().toJson(data)
-            outputStream?.write("$json\n".toByteArray())
-            outputStream?.flush()
-            
-        } catch (e: Exception) {
-            Log.e(TAG, "Error enviando comando", e)
-        }
-    }
-    
-    override fun onResume() {
-        super.onResume()
-        gyroscopeSensor?.let { sensor ->
-            sensorManager.registerListener(this, sensor, sensorDelay)
-        }
-        accelerometerSensor?.let { sensor ->
-            sensorManager.registerListener(this, sensor, sensorDelay)
-        }
-    }
-    
-    override fun onPause() {
-        super.onPause()
-        sensorManager.unregisterListener(this)
     }
     
     override fun onDestroy() {
         super.onDestroy()
-        disconnect()
-    }
-    
-    override fun onSensorChanged(event: SensorEvent?) {
-        event?.let { sensorEvent ->
-            when (sensorEvent.sensor.type) {
-                Sensor.TYPE_GYROSCOPE -> {
-                    val gyroData = SensorData(
-                        sensorEvent.values[0],
-                        sensorEvent.values[1],
-                        sensorEvent.values[2]
-                    )
-                    
-                    // Aplicar calibración
-                    val calibratedGyro = if (isCalibrated) {
-                        SensorData(
-                            gyroData.x - gyroBias.x,
-                            gyroData.y - gyroBias.y,
-                            gyroData.z - gyroBias.z
-                        )
-                    } else {
-                        gyroData
-                    }
-                    
-                    // Aplicar filtro de Kalman
-                    val filteredX = kalmanX.update(calibratedGyro.x)
-                    val filteredY = kalmanY.update(calibratedGyro.y)
-                    
-                    val filteredGyro = SensorData(filteredX, filteredY, calibratedGyro.z)
-                    
-                    // Guardar para calibración
-                    if (!isCalibrated && calibrationSamples.size < CALIBRATION_SAMPLES) {
-                        calibrationSamples.add(gyroData)
-                    }
-                    
-                    // Enviar datos si está activo
-                    if (isActive && isCalibrated) {
-                        sendSensorData(filteredGyro, lastAccelData)
-                    }
-
-                    // Actualizar estadísticas
-                    updateSensorStats(gyroData, lastAccelData)
-                }
-                
-                Sensor.TYPE_ACCELEROMETER -> {
-                    lastAccelData = SensorData(
-                        sensorEvent.values[0],
-                        sensorEvent.values[1],
-                        sensorEvent.values[2]
-                    )
-
-                    // Actualizar estadísticas
-                    updateSensorStats(lastGyroData, lastAccelData)
-                }
-            }
-        }
-    }
-    
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        // No necesitamos manejar cambios de precisión
-    }
-    
-    private var lastAccelData = SensorData(0f, 0f, 0f)
-    private var lastGyroData = SensorData(0f, 0f, 0f)
-    
-    data class SensorData(val x: Float, val y: Float, val z: Float)
-    
-    class KalmanFilter {
-        private var estimate = 0.0
-        private var estimateError = 1.0
-        private val processVariance = 1e-5
-        private val measurementVariance = 1e-2
         
-        fun update(measurement: Float): Float {
-            val predictionError = estimateError + processVariance
-            val kalmanGain = predictionError / (predictionError + measurementVariance)
-            
-            estimate = estimate + kalmanGain * (measurement - estimate)
-            estimateError = (1 - kalmanGain) * predictionError
-            
-            return estimate.toFloat()
-        }
-    }
-
-    // --- NUEVO: Animación visual al pulsar botón de mouse ---
-    private fun animateMouseButton(button: View) {
-        button.animate().scaleX(0.85f).scaleY(0.85f).setDuration(80).withEndAction {
-            button.animate().scaleX(1f).scaleY(1f).setDuration(80).start()
-        }.start()
-    }
-
-    // --- NUEVO: Actualizar estadísticas de sensores en tiempo real ---
-    private fun updateSensorStats(gyro: SensorData, accel: SensorData) {
-        runOnUiThread {
-            binding.gyroXText.text = "Gyro X: %.2f".format(gyro.x)
-            binding.gyroYText.text = "Gyro Y: %.2f".format(gyro.y)
-            binding.accelZText.text = "Accel Z: %.2f".format(accel.z)
-        }
+        // Limpiar recursos
+        sessionUpdateRunnable?.let { sessionUpdateHandler.removeCallbacks(it) }
+        sensorManager.unregisterListener(this)
+        disconnectFromServer()
+        billingManager.disconnect()
     }
 } 

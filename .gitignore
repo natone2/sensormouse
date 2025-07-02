@@ -36,17 +36,24 @@ venv.bak/
 *~
 
 # Android
+android-app/app/build/
+android-app/app/release/
+android-app/app/debug/
+android-app/app/*.keystore
+android-app/app/release.properties
+android-app/app/local.properties
 android-app/.gradle/
 android-app/build/
-android-app/app/build/
-android-app/local.properties
-android-app/.idea/
-android-app/*.iml
-android-app/app/*.iml
 android-app/gradle/
 android-app/gradlew
 android-app/gradlew.bat
-android-app/gradle.properties
+android-app/local.properties
+
+# APKs compilados (protegidos para monetización)
+*.apk
+*.aab
+app-release.apk
+app-debug.apk
 
 # Logs
 *.log
@@ -72,10 +79,6 @@ Thumbs.db
 .env
 .env.local
 .env.production
-
-# APK files (optional - remove if you want to include them)
-*.apk
-releases/*.apk
 
 # Documentation build
 docs/_build/
@@ -108,4 +111,19 @@ secrets.json
 
 # Backup files
 *.bak
-*.backup 
+*.backup
+
+# Sensitive data
+*.keystore
+*.jks
+keystore.properties
+release.properties
+google-services.json
+google-services.json.bak
+
+# Build outputs
+outputs/
+intermediates/
+
+# Documentation builds
+docs/build/ 

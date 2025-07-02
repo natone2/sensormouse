@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Productos de Google Play Billing -->
+    <string name="product_pro_version">sensormouse_pro_version</string>
+    <string name="product_pro_version_title">SensorMouse Pro</string>
+    <string name="product_pro_version_description">Versión completa con todas las funcionalidades premium</string>
+    <string name="product_pro_version_price">€3.99</string>
+</resources> 

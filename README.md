@@ -80,6 +80,4 @@ python main.py
 🔧 **[Diagramas de instalación](docs/images/installation_diagram.md)** - Flujos paso a paso
 📊 **[Documentación visual](docs/images/SCREENSHOTS.md)** - Especificaciones y guías
 
-## 📁 Estructura del Proyecto
-
-```
+Este proyecto está en construcción.
